@@ -81,7 +81,7 @@ async function getRandomPoem() {
   const $ = cheerio.load(b);
   const title = $(".pd-title-a").text().trim();
   const text = $(".pd-text").text().trim();
-  return title + "\n" + text;
+  return title + "\n\n" + text;
 }
 
 async function hasWebhook() {
