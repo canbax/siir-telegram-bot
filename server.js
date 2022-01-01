@@ -34,12 +34,10 @@ function errResponseFn(err, res) {
 // get telegram updates using webhook
 app.post("/tupdate", async (req, res) => {
   try {
-    console.log("telegram update come with message: ", req.body.message.text);
     await processInput(req.body.message.text, req.body.message.chat.id);
     res.write("received telegram update: ", req.body);
     res.end();
   } catch (err) {
-    console.log("request body: ", typeof req.body, req.body);
     errResponseFn(err, res);
   }
 });
@@ -47,7 +45,6 @@ app.post("/tupdate", async (req, res) => {
 // respond to gitlab request
 app.post("/daily", async (req, res) => {
   try {
-    console.log("daily post: ", typeof req.body, req.body);
     if (req.body.pwd != TOKEN) {
       res.write("need password!");
       res.end();
@@ -58,7 +55,6 @@ app.post("/daily", async (req, res) => {
       res.end();
     }
   } catch (err) {
-    console.log("request body: ", typeof req.body, req.body);
     errResponseFn(err, res);
   }
 });
@@ -80,26 +76,17 @@ async function sendTelegramMsg(msg, chatId) {
 
 async function getRandomPoem() {
   const url = "https://www.antoloji.com/siir/rastgele";
-  await got(url)
-    .then((response) => {
-      const b = response.body;
-      const $ = cheerio.load(b);
-      const title = $(".pd-title-a").text().trim();
-      const text = $(".pd-text").text().trim();
-      console.log("title : ", title.trim());
-      console.log("text : ", text);
-      return title + "\n" + text;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  return "";
+  const response = await got(url);
+  const b = response.body;
+  const $ = cheerio.load(b);
+  const title = $(".pd-title-a").text().trim();
+  const text = $(".pd-text").text().trim();
+  return title + "\n" + text;
 }
 
 async function hasWebhook() {
   try {
     const { body } = await got(URL + "getWebhookInfo");
-    console.log("has web hook: ", body);
     const b = JSON.parse(body);
     return b.result.url.length > 0;
   } catch (err) {
