@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const got = require("got");
 const bodyParser = require("body-parser");
+const cheerio = require("cheerio");
 
 // allow every browser to get response from this server, this MUST BE AT THE TOP
 app.use(function (req, res, next) {
@@ -78,12 +79,27 @@ async function sendTelegramMsg(msg, chatId) {
 }
 
 async function getRandomPoem() {
+  const url = "https://www.antoloji.com/siir/rastgele";
+  await got(url)
+    .then((response) => {
+      const b = response.body;
+      const $ = cheerio.load(b);
+      const title = $(".pd-title-a").text().trim();
+      const text = $(".pd-text").text().trim();
+      console.log("title : ", title.trim());
+      console.log("text : ", text);
+      return title + "\n" + text;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   return "";
 }
 
 async function hasWebhook() {
   try {
     const { body } = await got(URL + "getWebhookInfo");
+    console.log("has web hook: ", body);
     const b = JSON.parse(body);
     return b.result.url.length > 0;
   } catch (err) {

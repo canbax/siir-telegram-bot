@@ -1,24 +1,26 @@
 {
-  "name": "kurandan-telegram-bot",
+  "name": "siir-telegram-bot",
   "version": "1.0.0",
-  "description": "Kur'an'dan kısımlar getiren telegram botu",
+  "description": "Şiir getiren telegram botu",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "Kuran",
-    "telegram",
+    "Şiir",
+    "siir",
     "bot",
-    "Kur'an"
+    "Şair",
+    "Poem",
+    "Poet"
   ],
   "author": "Yusuf Canbaz",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.10",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "got": "^11.8.3",
-    "login-with-twitter": "^1.2.4"
+    "got": "^11.8.3"
   }
 }
