@@ -25,6 +25,23 @@ const URL = "https://api.telegram.org/bot" + TOKEN + "/";
 const welcomeMsg =
   "Merhaba. Ben şiir getiren bir botum :) /siir komutu ile rastgele getirebilirsiniz.";
 
+
+/**
+ * @param  {string} ch single character
+ */
+function isLowLetter(ch) {
+  const lows = `qwertyuıopğüasdfghjklşizxcvbnmöç.,?!'-/`;
+  return lows.includes(ch);
+}
+
+/**
+ * @param  {string} ch single character
+ */
+function isHighLetter(ch) {
+  const highs = `QWERTYUIOPĞÜASDFGHJKLŞİZXCVBNMÖÇ`;
+  return highs.includes(ch);
+}
+
 function errResponseFn(err, res) {
   console.log(err);
   res.write("Error: ", JSON.stringify(err));
@@ -80,8 +97,21 @@ async function getRandomPoem() {
   const b = response.body;
   const $ = cheerio.load(b);
   const title = $(".pd-title-a").text().trim();
-  const text = $(".pd-text").text().trim();
+  let text = $(".pd-text").text().trim();
+  text = fixCamelCase(text);
   return title + "\n\n" + text;
+}
+
+function fixCamelCase(s) {
+  let r = '';
+  for (let i = 0; i < s.length - 1; i++) {
+    r += s[i];
+    if (isLowLetter(s[i]) && isHighLetter(s[i + 1])) {
+      r += '\n';
+    }
+  }
+  r += s[s.length - 1];
+  return r;
 }
 
 async function hasWebhook() {
