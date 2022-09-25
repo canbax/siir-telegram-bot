@@ -49,7 +49,7 @@ function errResponseFn(err, res) {
 }
 
 // get telegram updates using webhook
-app.post("/tupdate", async (req, res) => {
+app.post("/api/tupdate", async (req, res) => {
   try {
     await processInput(req.body.message.text, req.body.message.chat.id);
     res.write("received telegram update: ", req.body);
@@ -60,7 +60,7 @@ app.post("/tupdate", async (req, res) => {
 });
 
 // respond to gitlab request
-app.post("/daily", async (req, res) => {
+app.post("/api/daily", async (req, res) => {
   try {
     if (req.body.pwd != TOKEN) {
       res.write("need password!");
