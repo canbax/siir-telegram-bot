@@ -22,7 +22,7 @@ kullanarak rasgele bir şiir getirir.
 
   <p>
     Her gün Türkiye saati ile 19'da bir private <a target="_blank" href="https://gitlab.com/canbax/daily-webhooker"
-      class="link-info">GitLab</a> projesinde tanımlı bir pipeline schedule sayesinde heroku'daki ücretsiz sunucuya
+      class="link-info">GitLab</a> projesinde tanımlı bir pipeline schedule sayesinde vercel'deki ücretsiz sunucuya
     (burası oluyor) HTTP
     isteği gönderir. Bu istek gelince twitter ve telegramda pasaj paylaşılır.
   </p>

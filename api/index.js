@@ -125,7 +125,7 @@ async function hasWebhook() {
 }
 
 async function setWebhook() {
-  const webhook = "https://her-gun-siir.herokuapp.com/tupdate";
+  const webhook = "https://siir.vercel.app/api/tupdate";
   try {
     if (await hasWebhook()) {
       return;
